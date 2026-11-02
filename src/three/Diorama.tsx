@@ -16,6 +16,9 @@ type DioramaProps = {
   className?: string;
 };
 
+/** Phones and small tablets get half-resolution shadows and a lower pixel-ratio cap. */
+const SMALL_SCREEN = typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
+
 const DUSK_SUN = new THREE.Vector3(-0.55, 0.62, 0.55).normalize().multiplyScalar(500);
 const DAY_SUN = new THREE.Vector3(-0.45, 0.78, 0.45).normalize().multiplyScalar(500);
 
@@ -30,7 +33,7 @@ export function Diorama({ mode, focus, time = 'dusk', autoRotate = true, labels,
       <Canvas
         flat
         shadows="percentage"
-        dpr={[1, 2]}
+        dpr={SMALL_SCREEN ? [1, 1.5] : [1, 2]}
         frameloop={visible ? 'always' : 'never'}
         camera={{ fov: 30, near: 1, far: 4000 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -65,7 +68,7 @@ function Scene({ mode, focus, dusk, autoRotate, reduce, labels }: SceneProps) {
         color={dusk ? '#ffe2bf' : '#fffaf0'}
         intensity={dusk ? 1.7 : 1.9}
         position={dusk ? DUSK_SUN : DAY_SUN}
-        shadow-mapSize={[4096, 4096]}
+        shadow-mapSize={SMALL_SCREEN ? [2048, 2048] : [4096, 4096]}
         shadow-bias={-0.0004}
         shadow-normalBias={0.25}
         shadow-camera-left={-shadowSpan}

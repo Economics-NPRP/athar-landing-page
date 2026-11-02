@@ -5,9 +5,18 @@
   z-index: 20;
   margin: 0 calc(-1 * var(--gutter)) 8px;
   padding: 10px var(--gutter);
-  background: rgba(241, 245, 240, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--ground);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+@media (max-width: 599px) {
+  .showing {
+    display: none;
+  }
+  .seg {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
 }
 
 .switchRow {
@@ -205,9 +214,11 @@
   transition: border-color 200ms ease, transform 300ms var(--ease-out);
 }
 
-.tile:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .tile:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
 }
 
 .tileName {
@@ -538,9 +549,11 @@
   transition: transform 500ms var(--ease-out), box-shadow 500ms var(--ease-out);
 }
 
-.sensor:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: var(--shadow-hard);
+@media (hover: hover) {
+  .sensor:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: var(--shadow-hard);
+  }
 }
 
 .sensor h3 {

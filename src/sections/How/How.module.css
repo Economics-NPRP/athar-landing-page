@@ -28,8 +28,10 @@
   transition: transform 600ms var(--ease-out);
 }
 
-.row:hover::before {
-  transform: scaleX(1);
+@media (hover: hover) {
+  .row:hover::before {
+    transform: scaleX(1);
+  }
 }
 
 .head {
@@ -57,10 +59,12 @@
   transition: transform 500ms var(--ease-out), background 300ms ease;
 }
 
-.row:hover .icon {
-  transform: rotate(-8deg) scale(1.08);
-  background: var(--accent);
-  color: #fff;
+@media (hover: hover) {
+  .row:hover .icon {
+    transform: rotate(-8deg) scale(1.08);
+    background: var(--accent);
+    color: #fff;
+  }
 }
 
 .title {
@@ -71,8 +75,10 @@
   transition: transform 500ms var(--ease-out);
 }
 
-.row:hover .title {
-  transform: translateX(6px);
+@media (hover: hover) {
+  .row:hover .title {
+    transform: translateX(6px);
+  }
 }
 
 .text {

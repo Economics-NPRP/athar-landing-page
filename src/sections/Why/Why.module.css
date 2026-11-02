@@ -41,8 +41,10 @@
   transition: transform 500ms var(--ease-out);
 }
 
-.stat:hover::before {
-  transform: scaleY(1);
+@media (hover: hover) {
+  .stat:hover::before {
+    transform: scaleY(1);
+  }
 }
 
 .value {

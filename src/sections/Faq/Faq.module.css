@@ -34,9 +34,11 @@
   transition: color 200ms ease, padding 300ms var(--ease-out);
 }
 
-.q:hover {
-  color: var(--accent);
-  padding-left: 10px;
+@media (hover: hover) {
+  .q:hover {
+    color: var(--accent);
+    padding-left: 10px;
+  }
 }
 
 .q:focus-visible {

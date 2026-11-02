@@ -139,6 +139,28 @@
   color: #fff;
 }
 
+@media (max-width: 599px) {
+  .thumbCaption {
+    gap: 12px;
+  }
+  .playBtn {
+    width: 48px;
+    height: 48px;
+  }
+  .playBtn svg {
+    font-size: 22px !important;
+  }
+  .thumbKicker {
+    font-size: 10px;
+  }
+  .thumbTitle {
+    font-size: 14px;
+  }
+  .thumbChip {
+    display: none;
+  }
+}
+
 .info {
   flex: 1 1 300px;
   display: flex;
@@ -199,7 +221,12 @@
   grid-auto-columns: minmax(168px, 1fr);
   gap: 10px;
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
   scrollbar-color: var(--pine-line) transparent;
+}
+
+.rail > li {
+  scroll-snap-align: start;
 }
 
 .chapter {
