@@ -1,0 +1,634 @@
+/* ---------- Sticky scale switch ---------- */
+.switchBar {
+  position: sticky;
+  top: calc(var(--nav-h) + 8px);
+  z-index: 20;
+  margin: 0 calc(-1 * var(--gutter)) 8px;
+  padding: 10px var(--gutter);
+  background: rgba(241, 245, 240, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.switchRow {
+  display: flex;
+  align-items: center;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+}
+
+.segs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--ground-2);
+  border-radius: 999px;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: none;
+}
+
+.seg {
+  all: unset;
+  position: relative;
+  cursor: pointer;
+  flex: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--ink-2);
+  transition: color 200ms ease;
+}
+
+.seg:hover,
+.seg[aria-pressed='true'] {
+  color: var(--ink);
+}
+
+.seg:focus-visible {
+  outline: 2px solid var(--accent);
+}
+
+.pill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 3px 3px 0 rgba(10, 41, 31, 0.06);
+}
+
+.segLabel {
+  position: relative;
+}
+
+.showing {
+  font-size: 12px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* ---------- Feature rows ---------- */
+.feature {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(32px, 4vw, 52px) 0;
+}
+
+.feature + .feature {
+  border-top: 1px solid var(--line);
+}
+
+.reverse {
+  flex-direction: row-reverse;
+}
+
+.copy {
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kicker {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.facts {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 32px;
+}
+
+.facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 12rem;
+  font-size: 13px;
+}
+
+.facts b {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.figureCol {
+  flex: 1.2 1 460px;
+  min-width: 0;
+}
+
+/* ---------- Figure cards ---------- */
+.figure {
+  padding: 20px 22px;
+}
+
+.figHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.figTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.figSub {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 5px 9px;
+  background: rgba(43, 201, 127, 0.14);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--good);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(12, 163, 12, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(12, 163, 12, 0);
+  }
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 128px), 1fr));
+  gap: 8px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-soft);
+  background: var(--ground);
+  min-width: 0;
+  transition: border-color 200ms ease, transform 300ms var(--ease-out);
+}
+
+.tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.tileName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-2);
+  min-width: 0;
+}
+
+.tileName > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tileValue {
+  display: block;
+  height: 1.3em;
+  overflow: hidden;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.tileValue > span {
+  display: inline-block;
+}
+
+.tileUnit {
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.figFoot {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sparkRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+}
+
+/* ---------- Carbon ---------- */
+.carbonHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 8px 16px;
+}
+
+.carbonNow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.carbonNow b {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.carbonNow span {
+  font-size: 14px;
+}
+
+.chartWrap {
+  position: relative;
+  margin-top: 10px;
+}
+
+.tip {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  min-width: 176px;
+  pointer-events: none;
+  padding: 10px 12px;
+  background: var(--pine);
+  color: var(--on-pine-2);
+  font-size: 12px;
+  line-height: 1.5;
+  box-shadow: var(--shadow-tag);
+  z-index: 2;
+}
+
+.tipTotal {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tipRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tipRow span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tipRow i {
+  width: 10px;
+  height: 10px;
+}
+
+.tipRow b {
+  font-family: var(--font-display);
+  color: #fff;
+}
+
+.bench {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.bench > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 10px;
+  border: 1px solid var(--line-soft);
+  background: var(--ground);
+  min-width: 0;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.bench b {
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.carbonFoot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 12px;
+}
+
+.carbonFoot .figSub {
+  margin: 0;
+}
+
+.tableWrap {
+  overflow: hidden auto;
+}
+
+.table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.table th,
+.table td {
+  padding: 6px 8px;
+  text-align: right;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.table th {
+  font-weight: 600;
+  color: var(--ink-3);
+  border-bottom-color: var(--line);
+}
+
+.table th:first-child,
+.table td:first-child {
+  text-align: left;
+}
+
+.total {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ---------- Report ---------- */
+.reportHead {
+  padding: 16px 22px;
+  background: var(--pine);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.reportBody {
+  padding: 18px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 10px;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+}
+
+.kpiHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.kpiValue {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.kpiNote {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+
+.reportList {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.assurance {
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.assurance b {
+  color: var(--ink-2);
+}
+
+/* ---------- Sensor cards ---------- */
+.sensors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: clamp(20px, 3vw, 40px);
+}
+
+.sensor {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 28px;
+  font-size: 15px;
+  line-height: 1.55;
+  transition: transform 500ms var(--ease-out), box-shadow 500ms var(--ease-out);
+}
+
+.sensor:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--shadow-hard);
+}
+
+.sensor h3 {
+  margin-top: 6px;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sensorIcon {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pine);
+  color: #fff;
+}
+
+.heatScale {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(90deg, #0ca30c 0%, #8cbf4a 30%, #e2b33b 55%, #fab219 76%, #b3261e 100%);
+}
+
+.heatScale span {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  left: 85%;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--pine-deep);
+}
+
+.heatTicks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.heatNote {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pollutants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pollutants span {
+  padding: 4px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.readings {
+  list-style: none;
+  margin: auto 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.readings li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.readings li > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.readings b {
+  font-family: var(--font-display);
+  color: var(--ink);
+}
