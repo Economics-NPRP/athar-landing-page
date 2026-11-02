@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { CHAPTERS, VIDEO } from '../../content/site';
 import { SectionHeader } from '../../components/ui/SectionHeader';
-import { clipUp, EASE_OUT, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
+import { CLIP_VIEWPORT, clipUp, EASE_OUT, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
 import styles from './Walkthrough.module.css';
 
 /** Walkthrough video with a chapter rail that seeks and follows playback. */
@@ -42,7 +42,7 @@ export function Walkthrough() {
           lede="Fourteen short chapters move from a single villa to the whole country and the sovereign AI data center behind it. Pick a chapter to jump straight to it."
         />
         <div className={styles.layout}>
-          <motion.div className={styles.player} variants={clipUp} initial="hidden" whileInView="show" viewport={VIEWPORT}>
+          <motion.div className={styles.player} variants={clipUp} initial="hidden" whileInView="show" viewport={CLIP_VIEWPORT}>
             <video ref={video} src={VIDEO.src} poster={VIDEO.poster} controls preload="metadata" playsInline onTimeUpdate={onTime} />
           </motion.div>
           <div className={styles.info}>

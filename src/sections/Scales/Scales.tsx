@@ -5,7 +5,7 @@ import { SectionHeader } from '../../components/ui/SectionHeader';
 import { Icon } from '../../components/ui/Icon';
 import { LazyDiorama } from '../../three/LazyDiorama';
 import { supportsWebGL } from '../../three/supportsWebGL';
-import { clipUp, EASE_OUT, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
+import { CLIP_VIEWPORT, clipUp, EASE_OUT, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
 import styles from './Scales.module.css';
 
 const ALL = { n: '01–09', t: 'Every scale', place: 'Qatar · one platform, every site' };
@@ -26,7 +26,7 @@ export function Scales() {
           lede="The same calibrated sensors, data model, dashboards and reports work for every kind of site. Start with one building and connect the rest when you are ready."
         />
         <div className={styles.layout}>
-          <motion.div className={styles.stage} variants={clipUp} initial="hidden" whileInView="show" viewport={VIEWPORT}>
+          <motion.div className={styles.stage} variants={clipUp} initial="hidden" whileInView="show" viewport={CLIP_VIEWPORT}>
             {webgl ? <LazyDiorama mode="explore" focus={active} /> : <img src="/media/hero-scales.jpg" alt="" className={styles.fallback} />}
             <div className={styles.badges}>
               <AnimatePresence mode="wait">

@@ -6,6 +6,7 @@ export const EASE_IN_OUT = [0.76, 0, 0.24, 1] as const;
 
 /** Reveal once, when a fifth of the element is on screen. */
 export const VIEWPORT = { once: true, amount: 0.2 } as const;
+export const CLIP_VIEWPORT = { once: true, amount: 0, margin: '0px 0px -10% 0px' } as const;
 
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 32 },
@@ -17,9 +18,12 @@ export const stagger = (step = 0.08, delay = 0): Variants => ({
   show: { transition: { staggerChildren: step, delayChildren: delay } },
 });
 
-/** Media wipes open from the bottom edge. */
+/**
+ * Media wipes open from the bottom edge. Pair with CLIP_VIEWPORT: IntersectionObserver measures the
+ * clipped area, so the start state keeps a sliver visible and the trigger fires on any intersection.
+ */
 export const clipUp: Variants = {
-  hidden: { clipPath: 'inset(100% 0% 0% 0%)' },
+  hidden: { clipPath: 'inset(99.5% 0% 0% 0%)' },
   show: { clipPath: 'inset(0% 0% 0% 0%)', transition: { duration: 1.2, ease: EASE_IN_OUT } },
 };
 

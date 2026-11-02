@@ -93,7 +93,7 @@
 
 .mask {
   display: inline-block;
-  overflow: hidden;
+  clip-path: inset(-0.2em -0.2em 0 -0.2em);
 }
 
 .mask > span {

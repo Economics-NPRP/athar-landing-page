@@ -34,8 +34,9 @@
 
 .mask {
   display: inline-block;
-  overflow: hidden;
   padding-bottom: 0.06em;
+  /* Clip only the bottom edge so tight letter-spacing doesn't shave glyph sides. */
+  clip-path: inset(-0.2em -0.2em 0 -0.2em);
 }
 
 .mask > span {

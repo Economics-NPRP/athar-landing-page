@@ -5,7 +5,7 @@ import { SectionHeader } from '../../components/ui/SectionHeader';
 import { Icon } from '../../components/ui/Icon';
 import { LazyDiorama } from '../../three/LazyDiorama';
 import { supportsWebGL } from '../../three/supportsWebGL';
-import { clipUp, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
+import { CLIP_VIEWPORT, clipUp, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
 import styles from './AiDataCenter.module.css';
 
 export function AiDataCenter() {
@@ -19,7 +19,7 @@ export function AiDataCenter() {
           title="Then, a sovereign AI data center for sustainability"
           lede="Every reading from every scale lands in one data center in Qatar. There, AI models calibrate sensors, find faults, forecast heat and verify carbon, on infrastructure the data owners control."
         />
-        <motion.figure className={styles.stage} variants={clipUp} initial="hidden" whileInView="show" viewport={VIEWPORT}>
+        <motion.figure className={styles.stage} variants={clipUp} initial="hidden" whileInView="show" viewport={CLIP_VIEWPORT}>
           {webgl && <LazyDiorama mode="dc" />}
           <figcaption className={`mono ${styles.caption}`}>Illustrative concept</figcaption>
         </motion.figure>
