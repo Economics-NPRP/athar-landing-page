@@ -1,6 +1,8 @@
 .stage {
   position: relative;
   margin: 0 0 clamp(32px, 4vw, 48px);
+  /* Explicit width: otherwise min-height + aspect-ratio forces a 768px-wide box on phones. */
+  width: 100%;
   aspect-ratio: 2.4 / 1;
   min-height: 320px;
   background: radial-gradient(100% 120% at 60% 50%, #134232 0%, var(--pine) 70%, var(--pine-deep) 100%);
