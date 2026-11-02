@@ -1,6 +1,7 @@
 .hero {
   position: relative;
-  height: clamp(640px, 100svh, 980px);
+  /* Grows past the viewport only when the copy needs it (small phones). */
+  min-height: clamp(640px, 100svh, 980px);
   background: radial-gradient(120% 90% at 68% 58%, #134232 0%, var(--pine) 58%, var(--pine-deep) 100%);
   overflow: hidden;
   color: #fff;
@@ -86,7 +87,7 @@
 .content {
   position: relative;
   z-index: 2;
-  height: 100%;
+  min-height: inherit;
   max-width: var(--max);
   margin: 0 auto;
   padding: 116px var(--gutter) clamp(28px, 5vh, 48px);
@@ -165,8 +166,10 @@
 .stats {
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  row-gap: 16px;
   flex: 1 1 560px;
+  min-width: 0;
   max-width: 760px;
   pointer-events: auto;
 }

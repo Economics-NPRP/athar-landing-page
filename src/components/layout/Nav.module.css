@@ -148,6 +148,12 @@
   }
 }
 
+@media (max-width: 400px) {
+  .wordmark {
+    display: none;
+  }
+}
+
 @media (max-width: 479px) {
   .ctaLong {
     display: none;
