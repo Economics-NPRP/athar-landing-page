@@ -69,10 +69,11 @@ export const CHAPTERS = CHAPTER_ROWS.map(([t, grp, title, sum], i) => ({
   title,
   sum,
   n: pad2(i + 1),
-  img: `/media/chapters/ch${pad2(i + 1)}.jpg`,
+  /** Extensionless: rendered through <Picture> as AVIF with a JPEG fallback. */
+  img: `/media/chapters/ch${pad2(i + 1)}`,
 }));
 
-export const VIDEO = { src: '/media/sss-walkthrough.mp4', poster: '/media/walkthrough-poster.jpg', length: '2:28' };
+export const VIDEO = { youtubeId: '75yT2QyPcyE', poster: '/media/walkthrough-poster', length: '2:28' };
 
 type Card = { icon: IconName; t: string; p: string };
 

@@ -28,7 +28,7 @@ export function Nav({ show }: { show: boolean }) {
     >
       <nav className={styles.nav} aria-label="Main">
         <a href="#top" className={styles.brand}>
-          <img src="/media/ecodesign-logo-light.png" alt="EcoDesign" className={styles.logo} />
+          <img src="/media/ecodesign-logo-light.webp" alt="EcoDesign" className={styles.logo} />
           <span className={styles.wordmark}>Athar</span>
         </a>
         <div className={styles.links}>

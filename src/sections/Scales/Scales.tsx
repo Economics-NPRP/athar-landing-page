@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { SCALES } from '../../content/site';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { Icon } from '../../components/ui/Icon';
+import { Picture } from '../../components/ui/Picture';
 import { LazyDiorama } from '../../three/LazyDiorama';
 import { supportsWebGL } from '../../three/supportsWebGL';
 import { CLIP_VIEWPORT, clipUp, EASE_OUT, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
@@ -27,7 +28,7 @@ export function Scales() {
         />
         <div className={styles.layout}>
           <motion.div className={styles.stage} variants={clipUp} initial="hidden" whileInView="show" viewport={CLIP_VIEWPORT}>
-            {webgl ? <LazyDiorama mode="explore" focus={active} /> : <img src="/media/hero-scales.jpg" alt="" className={styles.fallback} />}
+            {webgl ? <LazyDiorama mode="explore" focus={active} /> : <Picture src="/media/hero-scales" className={styles.fallback} />}
             <div className={styles.badges}>
               <AnimatePresence mode="wait">
                 <motion.div

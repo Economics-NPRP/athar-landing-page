@@ -1,35 +1,36 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { CHAPTERS, VIDEO } from '../../content/site';
+import { useYouTubePlayer } from '../../hooks/useYouTubePlayer';
 import { SectionHeader } from '../../components/ui/SectionHeader';
+import { Icon } from '../../components/ui/Icon';
+import { Picture } from '../../components/ui/Picture';
 import { CLIP_VIEWPORT, clipUp, EASE_OUT, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
 import styles from './Walkthrough.module.css';
 
-/** Walkthrough video with a chapter rail that seeks and follows playback. */
+/** Walkthrough on YouTube behind a custom thumbnail, with a chapter rail that seeks and follows playback. */
 export function Walkthrough() {
-  const video = useRef<HTMLVideoElement>(null);
+  const host = useRef<HTMLDivElement>(null);
+  const [playing, setPlaying] = useState(false);
   const [chap, setChap] = useState(0);
   const [prog, setProg] = useState(0);
   const now = CHAPTERS[chap];
 
-  const onTime = () => {
-    const v = video.current;
-    if (!v) return;
-    const t = v.currentTime;
+  const onTime = (t: number, duration: number) => {
     const i = Math.max(0, CHAPTERS.findLastIndex(c => t >= c.t));
-    const end = CHAPTERS[i + 1]?.t ?? (v.duration || CHAPTERS[i].t + 20);
+    const end = CHAPTERS[i + 1]?.t ?? (duration || CHAPTERS[i].t + 20);
     const p = Math.max(0, Math.min(1, (t - CHAPTERS[i].t) / (end - CHAPTERS[i].t)));
-    if (i !== chap) setChap(i);
-    if (Math.abs(p - prog) > 0.01) setProg(p);
+    setChap(i);
+    setProg(prev => (Math.abs(p - prev) > 0.01 ? p : prev));
   };
+
+  const { seek } = useYouTubePlayer({ host, videoId: VIDEO.youtubeId, active: playing, start: now.t, onTime });
 
   const go = (i: number) => {
     setChap(i);
     setProg(0);
-    const v = video.current;
-    if (!v) return;
-    v.currentTime = CHAPTERS[i].t;
-    v.play().catch(() => {});
+    if (playing) seek(CHAPTERS[i].t);
+    else setPlaying(true);
   };
 
   return (
@@ -43,7 +44,36 @@ export function Walkthrough() {
         />
         <div className={styles.layout}>
           <motion.div className={styles.player} variants={clipUp} initial="hidden" whileInView="show" viewport={CLIP_VIEWPORT}>
-            <video ref={video} src={VIDEO.src} poster={VIDEO.poster} controls preload="metadata" playsInline onTimeUpdate={onTime} />
+            <div ref={host} className={styles.embed} />
+            <AnimatePresence>
+              {!playing && (
+                <motion.button
+                  key="thumbnail"
+                  className={styles.thumbnail}
+                  onClick={() => setPlaying(true)}
+                  aria-label={`Play the walkthrough from chapter ${now.n}: ${now.title}`}
+                  exit={{ opacity: 0, scale: 1.04 }}
+                  transition={{ duration: 0.6, ease: EASE_OUT }}
+                >
+                  <Picture src={chap === 0 ? VIDEO.poster : now.img} className={styles.thumbImg} />
+                  <span className={styles.thumbScrim} />
+                  <span className={`mono ${styles.thumbChip}`}>
+                    <Icon name="play" size={10} />
+                    Walkthrough · {VIDEO.length}
+                  </span>
+                  <span className={styles.thumbCaption}>
+                    <span className={styles.playBtn}>
+                      <span className={styles.playRing} />
+                      <Icon name="play" size={28} />
+                    </span>
+                    <span className={styles.thumbText}>
+                      <span className={`mono ${styles.thumbKicker}`}>Chapter {now.n}</span>
+                      <span className={styles.thumbTitle}>{now.title}</span>
+                    </span>
+                  </span>
+                </motion.button>
+              )}
+            </AnimatePresence>
           </motion.div>
           <div className={styles.info}>
             <AnimatePresence mode="wait">
@@ -73,7 +103,7 @@ export function Walkthrough() {
             <motion.li key={c.n} variants={fadeUp}>
               <button className={`${styles.chapter} ${i === chap ? styles.chapterOn : ''}`} onClick={() => go(i)} aria-current={i === chap}>
                 <span className={styles.thumb}>
-                  <img src={c.img} alt="" loading="lazy" />
+                  <Picture src={c.img} loading="lazy" />
                 </span>
                 <span className={`mono ${styles.meta}`}>
                   <span className={styles.metaN}>{c.n}</span>

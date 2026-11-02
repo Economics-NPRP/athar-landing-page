@@ -96,6 +96,11 @@ video {
   max-width: 100%;
 }
 
+/* <Picture> wrappers shouldn't affect layout; the inner <img> is styled directly. */
+picture {
+  display: contents;
+}
+
 button {
   font: inherit;
 }
@@ -379,5 +384,7 @@ html.lenis body {
   *::before,
   *::after {
     transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

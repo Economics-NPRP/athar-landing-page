@@ -17,7 +17,7 @@ export function Footer() {
       <div className={styles.inner}>
         <div className={styles.top}>
           <div className={styles.about}>
-            <img src="/media/ecodesign-logo-light.png" alt="EcoDesign" className={styles.logo} />
+            <img src="/media/ecodesign-logo-light.webp" alt="EcoDesign" className={styles.logo} />
             <p>Smart Sustainability Solutions is developed by EcoDesign.global at Qatar Science &amp; Technology Park, Doha.</p>
           </div>
           <ul className={styles.links}>

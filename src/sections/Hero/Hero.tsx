@@ -5,6 +5,7 @@ import { LazyDiorama } from '../../three/LazyDiorama';
 import { supportsWebGL } from '../../three/supportsWebGL';
 import { useInterval } from '../../hooks/useInterval';
 import { Icon } from '../../components/ui/Icon';
+import { Picture } from '../../components/ui/Picture';
 import { ButtonLink } from '../../components/ui/ButtonLink';
 import { SplitText } from '../../components/motion/SplitText';
 import { Counter } from '../../components/motion/Counter';
@@ -50,7 +51,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <header id="top" ref={ref} className={styles.hero}>
-      {webgl ? <LazyDiorama mode="hero" labels={labels} /> : <img src="/media/hero-scales.jpg" alt="" className={styles.fallback} />}
+      {webgl ? <LazyDiorama mode="hero" labels={labels} /> : <Picture src="/media/hero-scales" className={styles.fallback} />}
       <div className={styles.scrim} />
       <div className={styles.fade} />
 
