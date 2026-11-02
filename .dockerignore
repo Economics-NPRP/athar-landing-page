@@ -1,0 +1,9 @@
+node_modules
+dist
+references
+.git
+.gitignore
+.DS_Store
+Dockerfile
+.dockerignore
+*.md
