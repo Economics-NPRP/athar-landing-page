@@ -1,0 +1,113 @@
+.footer {
+  background: var(--pine-deep);
+  color: var(--on-pine-2);
+  padding: clamp(48px, 6vw, 72px) var(--gutter) 28px;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px 48px;
+  padding-bottom: 32px;
+}
+
+.about {
+  flex: 1 1 320px;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.logo {
+  height: 40px;
+  align-self: flex-start;
+}
+
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, max-content));
+  gap: 12px 56px;
+  font-size: 14px;
+}
+
+@media (min-width: 900px) {
+  .links {
+    grid-template-columns: repeat(2, max-content);
+  }
+}
+
+.links a {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--mint-soft);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 400ms var(--ease-out);
+}
+
+.links a:hover {
+  color: var(--mint-soft);
+}
+
+.links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.wordmark {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 -0.12em;
+  font-family: var(--font-display);
+  font-size: clamp(120px, 27vw, 420px);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--pine);
+  user-select: none;
+}
+
+.mask {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.mask > span {
+  display: inline-block;
+}
+
+.bottom {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--pine-line);
+  font-size: 12px;
+  color: var(--on-pine-3);
+}

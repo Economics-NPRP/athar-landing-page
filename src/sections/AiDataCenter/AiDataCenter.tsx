@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { AI, AI_CHIPS } from '../../content/site';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { Icon } from '../../components/ui/Icon';
-import { Diorama } from '../../three/Diorama';
+import { LazyDiorama } from '../../three/LazyDiorama';
 import { supportsWebGL } from '../../three/supportsWebGL';
 import { clipUp, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
 import styles from './AiDataCenter.module.css';
@@ -20,7 +20,7 @@ export function AiDataCenter() {
           lede="Every reading from every scale lands in one data center in Qatar. There, AI models calibrate sensors, find faults, forecast heat and verify carbon, on infrastructure the data owners control."
         />
         <motion.figure className={styles.stage} variants={clipUp} initial="hidden" whileInView="show" viewport={VIEWPORT}>
-          {webgl && <Diorama mode="dc" />}
+          {webgl && <LazyDiorama mode="dc" />}
           <figcaption className={`mono ${styles.caption}`}>Illustrative concept</figcaption>
         </motion.figure>
         <motion.ul className={styles.grid} variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={VIEWPORT}>

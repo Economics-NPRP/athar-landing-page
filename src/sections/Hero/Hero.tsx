@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { HERO_STATS, VIDEO } from '../../content/site';
-import { Diorama } from '../../three/Diorama';
+import { LazyDiorama } from '../../three/LazyDiorama';
 import { supportsWebGL } from '../../three/supportsWebGL';
 import { useInterval } from '../../hooks/useInterval';
 import { Icon } from '../../components/ui/Icon';
@@ -50,7 +50,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <header id="top" ref={ref} className={styles.hero}>
-      {webgl ? <Diorama mode="hero" labels={labels} /> : <img src="/media/hero-scales.jpg" alt="" className={styles.fallback} />}
+      {webgl ? <LazyDiorama mode="hero" labels={labels} /> : <img src="/media/hero-scales.jpg" alt="" className={styles.fallback} />}
       <div className={styles.scrim} />
       <div className={styles.fade} />
 
