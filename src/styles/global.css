@@ -1,0 +1,383 @@
+/* Design tokens and shared primitives. Section-specific styles live next to each section as CSS modules. */
+:root {
+  --ground: #f1f5f0;
+  --ground-2: #e6ede7;
+  --surface: #ffffff;
+  --ink: #0b2a20;
+  --ink-2: #41574d;
+  --ink-3: #5c7065;
+  --line: #d2dcd4;
+  --line-soft: #e6ede7;
+  --line-strong: #bccbc0;
+  --accent: #0f7447;
+  --accent-dark: #0a5c38;
+  --accent-wash: #d8f1e3;
+  --accent-wash-2: #bfead2;
+  --mint: #2bc97f;
+  --mint-hover: #45d891;
+  --mint-soft: #9fe8c2;
+  --on-mint: #062016;
+  --pine: #0a291f;
+  --pine-deep: #061a13;
+  --pine-tile: #10362a;
+  --pine-line: #21493a;
+  --on-pine: #e9f2ec;
+  --on-pine-2: #a9c2b6;
+  --on-pine-3: #87a397;
+  --glass: rgba(7, 30, 22, 0.88);
+  --good: #0ca30c;
+  --warn: #fab219;
+  --crit: #d03b3b;
+  --crit-ink: #b3261e;
+  --flag-good: #0a7d0a;
+  --flag-warn: #8a5a00;
+  --s-elec: #0f7447;
+  --s-chw: #3987e5;
+  --s-scope1: #c98500;
+
+  --font-display: 'Readex Pro', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-body: 'Figtree', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --shadow-hard: 6px 6px 0 rgba(10, 41, 31, 0.1);
+  --shadow-tag: 4px 4px 0 rgba(10, 41, 31, 0.14);
+  --gutter: clamp(20px, 4vw, 40px);
+  --section-y: clamp(64px, 8vw, 120px);
+  --max: 1400px;
+  --nav-h: 60px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--ground);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink-2);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--accent-dark);
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--mint);
+  color: var(--on-mint);
+}
+
+section[id],
+header[id] {
+  scroll-margin-top: 72px;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding: var(--section-y) 0;
+  background: var(--surface);
+}
+
+.section--ground {
+  background: var(--ground);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.section--pine {
+  background: var(--pine);
+  color: #fff;
+}
+
+.section--deep {
+  background: var(--pine-deep);
+  color: #fff;
+}
+
+/* ---------- Type ---------- */
+.mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.h2 {
+  font-size: clamp(30px, 3.8vw, 52px);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.h3 {
+  font-size: clamp(24px, 2.2vw, 32px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.lede {
+  font-size: clamp(16px, 1.2vw, 18px);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.on-dark .h2,
+.on-dark .h3 {
+  color: #fff;
+}
+
+.on-dark .lede {
+  color: var(--on-pine-2);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 300ms var(--ease-out), border-color 300ms var(--ease-out);
+}
+
+/* Fill wipes up from below on hover. */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateY(101%);
+  transition: transform 450ms var(--ease-out);
+}
+
+.btn:hover::before {
+  transform: translateY(0);
+}
+
+.btn svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+.btn:hover svg[data-arrow] {
+  transform: translateX(3px);
+}
+
+.btn--sm {
+  height: 36px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+.btn--mint {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--on-mint);
+}
+
+.btn--mint::before {
+  background: var(--mint-hover);
+}
+
+.btn--mint:hover {
+  color: var(--on-mint);
+}
+
+.btn--light {
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+.btn--light::before {
+  background: var(--ground-2);
+}
+
+.btn--light:hover {
+  color: var(--ink);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.btn--ghost::before {
+  background: var(--ground);
+}
+
+.btn--ghost:hover {
+  color: var(--ink);
+}
+
+.link-btn {
+  all: unset;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Chips ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+}
+
+.chip svg {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+.on-dark .chip {
+  border-color: var(--pine-line);
+  color: #fff;
+}
+
+.on-dark .chip:hover {
+  border-color: var(--mint);
+}
+
+.on-dark .chip svg {
+  color: var(--mint);
+}
+
+/* ---------- Misc ---------- */
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.figure-card {
+  margin: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-hard);
+}
+
+.tag-dark {
+  white-space: nowrap;
+  background: var(--glass);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+  }
+}

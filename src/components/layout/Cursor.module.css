@@ -1,0 +1,45 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.ring {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 1.5px solid var(--mint);
+  border-radius: 50%;
+  transition: background-color 250ms ease, border-color 250ms ease;
+}
+
+.ring[data-mode='hover'] {
+  background: rgba(43, 201, 127, 0.14);
+}
+
+.ring[data-mode='drag'] {
+  background: var(--mint);
+  border-color: var(--mint);
+}
+
+.label {
+  /* Zero-size flex box centres the text on the pointer without fighting motion's transform. */
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-mint);
+}
