@@ -187,24 +187,14 @@
   color: var(--ink);
 }
 
-.resultInner pre {
-  margin: 0;
-  max-height: 220px;
-  overflow: auto;
-  padding: 12px;
-  background: #fff;
-  border: 1px solid var(--line);
-  white-space: pre-wrap;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.55;
-  color: var(--ink);
+.resultFailed {
+  background: color-mix(in srgb, var(--crit) 8%, #fff);
+  border-color: var(--crit-ink);
 }
 
-.resultActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.resultInner a {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 /* ---------- Sign-in strip ---------- */

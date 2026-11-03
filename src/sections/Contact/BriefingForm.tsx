@@ -3,18 +3,19 @@ import { AnimatePresence, motion } from 'motion/react';
 import { CONTACT_EMAIL, INTERESTS, SITE_TYPES } from '../../content/site';
 import { Icon } from '../../components/ui/Icon';
 import { EASE_OUT } from '../../components/motion/presets';
-import { buildBriefingEmail, validateBriefing, type BriefingFields, type BriefingErrors } from './briefing';
-import { useCopy } from './useCopy';
+import { validateBriefing, type BriefingFields, type BriefingErrors } from './briefing';
 import styles from './Contact.module.css';
 
 const EMPTY: BriefingFields = { name: '', org: '', email: '', site: SITE_TYPES[0], interest: INTERESTS[0], msg: '' };
 
-/** No backend: validates, then prepares a mailto link plus a copyable plain-text fallback. */
+type Status = { state: 'idle' | 'sending' | 'sent' | 'failed'; message?: string };
+
+/** Validates in the browser, then the server re-validates and emails the request to the SMARTSS inbox. */
 export function BriefingForm() {
   const [f, setF] = useState(EMPTY);
+  const [website, setWebsite] = useState(''); // honeypot, see server/index.ts
   const [errs, setErrs] = useState<BriefingErrors>({});
-  const [result, setResult] = useState<ReturnType<typeof buildBriefingEmail> | null>(null);
-  const [copied, copy] = useCopy();
+  const [status, setStatus] = useState<Status>({ state: 'idle' });
 
   const field = (k: keyof BriefingFields) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const v = e.target.value;
@@ -22,11 +23,29 @@ export function BriefingForm() {
     setErrs(s => ({ ...s, [k]: undefined }));
   };
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
+    if (status.state === 'sending') return;
     const found = validateBriefing(f);
     setErrs(found);
-    setResult(Object.keys(found).length ? null : buildBriefingEmail(f));
+    if (Object.keys(found).length) return;
+
+    setStatus({ state: 'sending' });
+    try {
+      const res = await fetch('/api/briefing', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...f, website }) });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        setStatus({ state: 'sent' });
+        setF(EMPTY);
+      } else if (res.status === 422 && data.errors) {
+        setErrs(data.errors);
+        setStatus({ state: 'idle' });
+      } else {
+        setStatus({ state: 'failed', message: data.error ?? 'The message could not be sent.' });
+      }
+    } catch {
+      setStatus({ state: 'failed', message: 'You appear to be offline.' });
+    }
   };
 
   return (
@@ -62,38 +81,46 @@ export function BriefingForm() {
       <Field label="Message" error={errs.msg}>
         <textarea value={f.msg} onChange={field('msg')} placeholder="Tell us about your site and what you want to measure." aria-invalid={!!errs.msg} />
       </Field>
+      <input
+        className="visually-hidden"
+        name="website"
+        value={website}
+        onChange={e => setWebsite(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
       <div className={styles.submitRow}>
-        <button type="submit" className="btn btn--mint">
+        <button type="submit" className="btn btn--mint" disabled={status.state === 'sending'}>
           <Icon name="mail" />
-          Prepare email
+          {status.state === 'sending' ? 'Sending…' : 'Send request'}
         </button>
-        <span className={styles.hint}>
-          This form does not send anything itself. It prepares an email to {CONTACT_EMAIL} that you send from your own mail app.
-        </span>
+        <span className={styles.hint}>Your request goes straight to our team at {CONTACT_EMAIL}. We reply to the email address you enter.</span>
       </div>
       <AnimatePresence>
-        {result && (
+        {(status.state === 'sent' || status.state === 'failed') && (
           <motion.div
+            key={status.state}
             className={styles.result}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.5, ease: EASE_OUT }}
           >
-            <div className={styles.resultInner}>
-              <p className={styles.resultTitle}>Your email is ready</p>
-              <p>Open it in your mail app and press send. If no app opens, copy the message below and send it to {CONTACT_EMAIL}.</p>
-              <pre>{result.text}</pre>
-              <div className={styles.resultActions}>
-                <a href={result.href} className="btn btn--mint btn--sm">
-                  <Icon name="mail" size={16} />
-                  Open in mail app
-                </a>
-                <button type="button" className="btn btn--ghost btn--sm" onClick={() => copy(result.text, 'msg')}>
-                  <Icon name="copy" size={16} />
-                  {copied === 'msg' ? 'Copied' : 'Copy message'}
-                </button>
-              </div>
+            <div className={`${styles.resultInner} ${status.state === 'failed' ? styles.resultFailed : ''}`} role="status">
+              {status.state === 'sent' ? (
+                <>
+                  <p className={styles.resultTitle}>Thank you, your request is on its way</p>
+                  <p>Our team will reply to you by email.</p>
+                </>
+              ) : (
+                <>
+                  <p className={styles.resultTitle}>Your request was not sent</p>
+                  <p>
+                    {status.message} Try again in a moment, or email us directly at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                  </p>
+                </>
+              )}
             </div>
           </motion.div>
         )}

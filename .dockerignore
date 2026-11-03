@@ -7,3 +7,4 @@ references
 Dockerfile
 .dockerignore
 *.md
+dist-server

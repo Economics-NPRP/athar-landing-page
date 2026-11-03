@@ -4,4 +4,4 @@ dist
 .DS_Store
 *.tsbuildinfo
 references
-node_modules
+node_modulesdist-server

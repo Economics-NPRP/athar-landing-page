@@ -1,0 +1,17 @@
+New briefing request (SMARTSS)
+
+{{name}} wants to talk about {{interest_lower}}.
+Sent from the Request a briefing form on {{sent_at}} (Doha time). Reply to this email to answer {{name}} directly.
+
+Name:          {{name}}
+Organization:  {{org}}
+Email:         {{email}}
+Type of site:  {{site}}
+Interested in: {{interest}}
+
+Message
+-------
+{{msg}}
+
+--
+Smart Sustainability Solutions · EcoDesign.global · Qatar Science & Technology Park, Doha

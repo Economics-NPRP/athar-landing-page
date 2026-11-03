@@ -6,20 +6,44 @@ Landing page for EcoDesign's sustainability platform, built with Bun, Vite, Reac
 
 ```sh
 bun install
-bun run dev        # http://localhost:5173
-bun run build      # type-check + production build into dist/
-bun run preview    # serve dist/
+bun run dev          # http://localhost:5173
+bun run dev:server   # contact form API on :8080 (Vite proxies /api to it)
+bun run build        # type-check + production build into dist/
+bun run start        # serve dist/ and the API with the Bun server
+bun test server      # server and email template tests
 ```
 
 ## Docker
 
 ```sh
 docker build -t smartss-landing-page .
-docker run -p 8080:8080 smartss-landing-page   # http://localhost:8080
+docker run -p 8080:8080 --env-file .env smartss-landing-page   # http://localhost:8080
 ```
 
-Multi-stage: Bun builds the site, then an unprivileged nginx serves `dist/` with pre-gzipped assets
-and immutable caching for hashed files.
+Multi-stage: Bun builds the site and bundles `server/` into one file; the runtime image runs it as a
+non-root user. The server sends pre-gzipped assets, caches hashed files forever, serves byte ranges for the video
+and adds security headers.
+
+## Contact form email
+
+"Request a briefing" posts to `POST /api/briefing`. The server validates it again (same rules as the form, in
+`src/sections/Contact/briefing.ts`), then emails it to `admin@ecodesign.global` (`CONTACT_EMAIL` in `src/content/site.ts`)
+with Reply-To set to the visitor. Limited to 5 requests per IP every 10 minutes, with a hidden honeypot field for bots.
+
+The email is `server/email/briefing-request.html` (open it in a browser to preview) and `briefing-request.txt`.
+The subject comes from the HTML `<title>`.
+
+Set these environment variables for SMTP (any provider: Microsoft 365, Google Workspace, SES, Postmark, ...):
+
+| Variable    | Example                                          |
+| ----------- | ------------------------------------------------ |
+| `SMTP_HOST` | `smtp.office365.com`                             |
+| `SMTP_PORT` | `587` (default; `465` switches to implicit TLS)  |
+| `SMTP_USER` | `no-reply@ecodesign.global`                      |
+| `SMTP_PASS` | app password or API key                          |
+| `MAIL_FROM` | `SMARTSS website <no-reply@ecodesign.global>` (defaults to `SMTP_USER`) |
+
+Without `SMTP_HOST` the site still works, but the form shows an error and points visitors to the email address.
 
 ## Media
 
@@ -41,6 +65,7 @@ src/
   three/          R3F diorama; world/ builds the procedural Qatar models
   hooks/          small shared hooks
   styles/         design tokens and global primitives
+server/           Bun server: static files, /api/briefing, email/ templates
 public/media/     walkthrough video, images and chapter thumbnails (AVIF + JPEG)
 ```
 
