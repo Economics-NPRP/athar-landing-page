@@ -48,6 +48,7 @@ Without `SMTP_HOST` the site still works, but the form shows an error and points
 ## Media
 
 - The walkthrough is `public/media/sss-walkthrough.mp4`, shown behind a custom thumbnail until the visitor presses play.
+  Encoded with `ffmpeg -i in.mp4 -c:v libx264 -preset slow -crf 26 -c:a aac -b:a 96k -movflags +faststart out.mp4`.
 - Photos ship as AVIF (rendered through `<Picture>`) with losslessly optimized JPEG fallbacks; the logo is lossless WebP.
   To add an image, drop `name.jpg` in `public/media/` and run `avifenc -q 80 -s 2 name.jpg name.avif`.
 
