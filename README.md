@@ -35,13 +35,18 @@ The subject comes from the HTML `<title>`.
 
 Set these environment variables for SMTP (any provider: Microsoft 365, Google Workspace, SES, Postmark, ...):
 
-| Variable    | Example                                          |
-| ----------- | ------------------------------------------------ |
-| `SMTP_HOST` | `smtp.office365.com`                             |
-| `SMTP_PORT` | `587` (default; `465` switches to implicit TLS)  |
-| `SMTP_USER` | `no-reply@ecodesign.global`                      |
-| `SMTP_PASS` | app password or API key                          |
-| `MAIL_FROM` | `SMARTSS website <no-reply@ecodesign.global>` (defaults to `SMTP_USER`) |
+| Variable            | Example                                                   |
+| ------------------- | --------------------------------------------------------- |
+| `SMTP_HOST`         | `email-smtp.eu-west-1.amazonaws.com`                      |
+| `SMTP_PORT`         | `587` (default; `465` uses TLS from the start)            |
+| `SMTP_USERNAME`     | SMTP username                                             |
+| `SMTP_PASSWORD`     | SMTP password                                             |
+| `SMTP_FROM_ADDRESS` | `no-reply@ecodesign.global` (defaults to `SMTP_USERNAME`) |
+| `SMTP_FROM_NAME`    | `SMARTSS website` (default)                               |
+| `SMTP_USE_SSL`      | `true` to refuse sending without TLS                      |
+
+Locally, put them in `.env.local` (git-ignored; Bun loads it automatically). With Docker, pass them with
+`--env-file`, but without quotes around values: `docker run` keeps quotes as part of the value.
 
 Without `SMTP_HOST` the site still works, but the form shows an error and points visitors to the email address.
 

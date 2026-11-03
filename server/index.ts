@@ -23,7 +23,7 @@ export const server = Bun.serve({
   fetch: serveStatic,
 });
 
-if (!mailConfigured) console.warn('SMTP is not configured: briefing requests will fail until SMTP_HOST and MAIL_FROM are set.');
+if (!mailConfigured) console.warn('SMTP is not configured: briefing requests will fail until SMTP_HOST and SMTP_FROM_ADDRESS are set.');
 console.log(`SMARTSS listening on http://localhost:${server.port}`);
 
 async function handleBriefing(req: Request) {
