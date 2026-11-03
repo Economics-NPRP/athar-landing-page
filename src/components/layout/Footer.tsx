@@ -31,7 +31,7 @@ export function Footer() {
           </ul>
         </div>
         <motion.p className={styles.wordmark} aria-hidden="true" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
-          {'Athar'.split('').map((ch, i) => (
+          {'SMARTSS'.split('').map((ch, i) => (
             <span key={i} className={styles.mask}>
               <motion.span
                 variants={{ hidden: { y: '100%' }, show: { y: '0%', transition: { duration: 1.1, ease: EASE_OUT, delay: i * 0.07 } } }}

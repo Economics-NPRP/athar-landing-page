@@ -1,4 +1,4 @@
-# Athar · Smart Sustainability Solutions
+# SMARTSS · Smart Sustainability Solutions
 
 Landing page for EcoDesign's sustainability platform, built with Bun, Vite, React, React Three Fiber (three.js) and Motion.
 
@@ -14,8 +14,8 @@ bun run preview    # serve dist/
 ## Docker
 
 ```sh
-docker build -t athar-landing-page .
-docker run -p 8080:8080 athar-landing-page   # http://localhost:8080
+docker build -t smartss-landing-page .
+docker run -p 8080:8080 smartss-landing-page   # http://localhost:8080
 ```
 
 Multi-stage: Bun builds the site, then an unprivileged nginx serves `dist/` with pre-gzipped assets
@@ -23,8 +23,7 @@ and immutable caching for hashed files.
 
 ## Media
 
-- The walkthrough is embedded from YouTube (`VIDEO.youtubeId` in `src/content/site.ts`) behind a custom
-  thumbnail; nothing loads from YouTube until the visitor presses play (privacy-enhanced `youtube-nocookie.com`).
+- The walkthrough is `public/media/sss-walkthrough.mp4`, shown behind a custom thumbnail until the visitor presses play.
 - Photos ship as AVIF (rendered through `<Picture>`) with losslessly optimized JPEG fallbacks; the logo is lossless WebP.
   To add an image, drop `name.jpg` in `public/media/` and run `avifenc -q 80 -s 2 name.jpg name.avif`.
 
@@ -42,7 +41,7 @@ src/
   three/          R3F diorama; world/ builds the procedural Qatar models
   hooks/          small shared hooks
   styles/         design tokens and global primitives
-public/media/     images and chapter thumbnails (AVIF + JPEG)
+public/media/     walkthrough video, images and chapter thumbnails (AVIF + JPEG)
 ```
 
 Animations respect `prefers-reduced-motion` (Motion's `reducedMotion="user"`, Lenis disabled, 3D auto-rotate off).

@@ -29,7 +29,7 @@ export function Nav({ show }: { show: boolean }) {
       <nav className={styles.nav} aria-label="Main">
         <a href="#top" className={styles.brand}>
           <img src="/media/ecodesign-logo-light.webp" alt="EcoDesign" className={styles.logo} />
-          <span className={styles.wordmark}>Athar</span>
+          <span className={styles.wordmark}>SMARTSS</span>
         </a>
         <div className={styles.links}>
           {NAV_ITEMS.map(n => (

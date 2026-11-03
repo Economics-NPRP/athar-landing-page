@@ -61,7 +61,7 @@
 
 @media (hover: hover) {
   .row:hover .icon {
-    transform: rotate(-8deg) scale(1.08);
+    transform: scale(1.08);
     background: var(--accent);
     color: #fff;
   }

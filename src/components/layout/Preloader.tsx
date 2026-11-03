@@ -3,7 +3,7 @@ import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 
 import { EASE_IN_OUT, EASE_OUT } from '../motion/presets';
 import styles from './Preloader.module.css';
 
-const WORD = 'Athar';
+const WORD = 'SMARTSS';
 
 /** Intro curtain: counts to 100 while fonts load, then lifts away to reveal the hero. */
 export function Preloader({ onDone }: { onDone: () => void }) {

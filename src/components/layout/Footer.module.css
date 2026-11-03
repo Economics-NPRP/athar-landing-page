@@ -83,7 +83,7 @@
   justify-content: space-between;
   margin: 0 0 -0.12em;
   font-family: var(--font-display);
-  font-size: clamp(120px, 27vw, 420px);
+  font-size: clamp(56px, 16vw, 260px);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.05em;

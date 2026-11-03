@@ -1,36 +1,39 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { CHAPTERS, VIDEO } from '../../content/site';
-import { useYouTubePlayer } from '../../hooks/useYouTubePlayer';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { Icon } from '../../components/ui/Icon';
 import { Picture } from '../../components/ui/Picture';
 import { CLIP_VIEWPORT, clipUp, EASE_OUT, fadeUp, stagger, VIEWPORT } from '../../components/motion/presets';
 import styles from './Walkthrough.module.css';
 
-/** Walkthrough on YouTube behind a custom thumbnail, with a chapter rail that seeks and follows playback. */
+/** Walkthrough video behind a custom thumbnail, with a chapter rail that seeks and follows playback. */
 export function Walkthrough() {
-  const host = useRef<HTMLDivElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [chap, setChap] = useState(0);
   const [prog, setProg] = useState(0);
   const now = CHAPTERS[chap];
 
-  const onTime = (t: number, duration: number) => {
+  const onTime = () => {
+    const v = video.current;
+    if (!v) return;
+    const t = v.currentTime;
     const i = Math.max(0, CHAPTERS.findLastIndex(c => t >= c.t));
-    const end = CHAPTERS[i + 1]?.t ?? (duration || CHAPTERS[i].t + 20);
+    const end = CHAPTERS[i + 1]?.t ?? (v.duration || CHAPTERS[i].t + 20);
     const p = Math.max(0, Math.min(1, (t - CHAPTERS[i].t) / (end - CHAPTERS[i].t)));
     setChap(i);
     setProg(prev => (Math.abs(p - prev) > 0.01 ? p : prev));
   };
 
-  const { seek } = useYouTubePlayer({ host, videoId: VIDEO.youtubeId, active: playing, start: now.t, onTime });
-
   const go = (i: number) => {
     setChap(i);
     setProg(0);
-    if (playing) seek(CHAPTERS[i].t);
-    else setPlaying(true);
+    setPlaying(true);
+    const v = video.current;
+    if (!v) return;
+    v.currentTime = CHAPTERS[i].t;
+    v.play().catch(() => {});
   };
 
   return (
@@ -44,13 +47,13 @@ export function Walkthrough() {
         />
         <div className={styles.layout}>
           <motion.div className={styles.player} variants={clipUp} initial="hidden" whileInView="show" viewport={CLIP_VIEWPORT}>
-            <div ref={host} className={styles.embed} />
+            <video ref={video} src={VIDEO.src} poster={`${VIDEO.poster}.jpg`} controls={playing} preload="metadata" playsInline onTimeUpdate={onTime} />
             <AnimatePresence>
               {!playing && (
                 <motion.button
                   key="thumbnail"
                   className={styles.thumbnail}
-                  onClick={() => setPlaying(true)}
+                  onClick={() => go(chap)}
                   aria-label={`Play the walkthrough from chapter ${now.n}: ${now.title}`}
                   exit={{ opacity: 0, scale: 1.04 }}
                   transition={{ duration: 0.6, ease: EASE_OUT }}

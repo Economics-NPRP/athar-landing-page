@@ -25,7 +25,7 @@
 
 .word {
   display: flex;
-  font-size: clamp(96px, 22vw, 340px);
+  font-size: clamp(48px, 14vw, 220px);
   font-weight: 600;
   line-height: 0.9;
   letter-spacing: -0.05em;
