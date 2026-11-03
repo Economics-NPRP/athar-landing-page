@@ -1,7 +1,8 @@
 # syntax=docker/dockerfile:1
 
 # ---- Build: compile the static site with Bun ----
-FROM oven/bun:1-alpine AS build
+# Output is static files, so build once on the runner arch; only the nginx stage is per-platform.
+FROM --platform=$BUILDPLATFORM oven/bun:1-alpine AS build
 WORKDIR /app
 
 COPY package.json bun.lock ./
