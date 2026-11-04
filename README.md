@@ -20,6 +20,12 @@ docker build -t smartss-landing-page .
 docker run -p 8080:8080 --env-file .env smartss-landing-page   # http://localhost:8080
 ```
 
+Or run the published image from GHCR, reading SMTP settings from `.env.local` if it exists:
+
+```sh
+docker compose up -d   # http://localhost:8080
+```
+
 Multi-stage: Bun builds the site and bundles `server/` into one file; the runtime image runs it as a
 non-root user. The server sends pre-gzipped assets, caches hashed files forever, serves byte ranges for the video
 and adds security headers.

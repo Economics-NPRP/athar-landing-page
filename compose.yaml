@@ -1,0 +1,9 @@
+services:
+  web:
+    image: ghcr.io/economics-nprp/athar-landing-page:latest
+    ports:
+      - "8080:8080"
+    env_file:
+      - path: .env.local
+        required: false
+    restart: unless-stopped
